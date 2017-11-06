@@ -1,34 +1,53 @@
 /*****************************************************************************************
-* FILENAME :        basicSwitch.c             DESIGN REF: 00000FW
+* FILENAME :        tempHum.c          
 *
 * DESCRIPTION :
-*       File to support SONOFF basic 
+*       File to support for DHT temperature and humidity sensor
 *
 * PUBLIC FUNCTIONS :
-*       boolean processPublishRequests(void)
+*       boolean tempHum_ProcessPublishRequests(void)
+*       void tempHum_CallbackMqtt(char* p_topic, String p_payload)
+*       void tempHum_InitializePins(void)
+*       void tempHum_Reconnect() 
 *
 * NOTES :
-*       This module supports the WIFI configuration and FW Update
-*       based on the library:
-*       https://github.com/tzapu/WiFiManager
-*       ssid of config page: OPEN_ESP_CONFIG_AP2
-*       ip address: 192.168.4.1
-*       Also toggleing the button at start will startup the WIFI
-*       configuration.
 *       
-*       The basicSwitch implements the MQTT sonoff basic switch
-*       functionality to turn on/off the relay in the switch. Additional
-*       the LED will be switched to indicate the status of the 
-*       relay.
+*       The tempHum implements the sensor interface to the DHT 11/22 temperature and
+*       humidity sensor. It supports functions to publish the data to a MQTT 
+*       server:
+*         #define MQTT_PUB_TEMPERATURE      "/temp_hum/temp" // temperature data
+*         #define MQTT_PUB_HUMIDITY         "/temp_hum/hum" // humidity data
+*         #define MQTT_PUB_BATTERY          "/temp_hum/bat" // battery capacity data
 *       
+*       Note: battery capacity is currently not available
 *
-*       Copyright A.N.Other Co. 2017.  All rights reserved.
+* 
+* Copyright (c) [2017] [Stephan Wink]
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
 * 
 * AUTHOR :    Stephan Wink        START DATE :    01.10.2017
 *
 *
 * REF NO  VERSION DATE    WHO     DETAIL
-* 000       16.10         SWI     First working version      
+* 000       16.10         SWI     migration from template      
+* 005       05.11         SWI     First verion working with DHT22
 *
 *****************************************************************************************/
 
@@ -89,6 +108,7 @@ boolean tempHum_ProcessPublishRequests(void)
   String tPayload;
   boolean ret = false;
 
+  // the temperature and humidity publication is time interval based
   if(prevTime_u32st + MQTT_REPORT_INTERVAL < millis() || prevTime_u32st == 0)
   {
     prevTime_u32st = millis();
@@ -102,7 +122,8 @@ boolean tempHum_ProcessPublishRequests(void)
     humidity_f32st = dht.readHumidity();
     temperature_f32st = dht.readTemperature();
     TurnDHTOff();
-    
+
+    // apply correction factor to both measurements
     humidity_f32st = humidity_f32st * HUMIDITY_CORR_FACTOR;
     temperature_f32st = temperature_f32st * TEMPERATURE_CORR_FACTOR;
     
@@ -177,7 +198,7 @@ void tempHum_InitializePins(void)
 *//*-----------------------------------------------------------------------------------*/
 void tempHum_Reconnect() 
 { 
-  // ... and resubscribe
+  // ... no subscriptions needed here
   
 }
 
