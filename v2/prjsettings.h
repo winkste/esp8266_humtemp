@@ -44,7 +44,11 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #define MQTT_PUB_TEMPERATURE      "/temp_hum/temp" // temperature data
 #define MQTT_PUB_HUMIDITY         "/temp_hum/hum" // humidity data
 #define MQTT_PUB_BATTERY          "/temp_hum/bat" // battery capacity data
-#define MQTT_REPORT_INTERVAL      60000 //(ms) - 60 seconds between reports
+#define MQTT_REPORT_INTERVAL      5000 //(ms) - 5 seconds between reports
+
+#define POWER_SAVE                1   // 1 = activated
+#define POWER_SAVE_TIME           10 // = 10 seconds power save time
+#define MAX_PUBS_TILL_POWER_SAVE  3
 // used pins
 //#define BUTTON_INPUT_PIN        0  // D3 used by template
 #define DHTPIN                    5  // D1

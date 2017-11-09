@@ -93,6 +93,7 @@ static DHT                  dht(DHTPIN, DHTTYPE, 11);
 static float                humidity_f32st = 0.0;
 static float                temperature_f32st = 0.0; 
 static unsigned long        prevTime_u32st = 0;
+static unsigned int         publications_u16 = 0;
 /*****************************************************************************************
 * Global functions (unlimited visibility): 
 *****************************************************************************************/
@@ -145,7 +146,19 @@ boolean tempHum_ProcessPublishRequests(void)
       Serial.print(MQTT_PUB_HUMIDITY);
       Serial.print("  :  ");
       ret = client_sts.publish(build_topic(MQTT_PUB_HUMIDITY), f2s(humidity_f32st, 2), true);
-      Serial.println(f2s(humidity_f32st, 2));      
+      Serial.println(f2s(humidity_f32st, 2));  
+      publications_u16++;
+
+      if(MAX_PUBS_TILL_POWER_SAVE < publications_u16)
+      {
+        publications_u16 = 0;
+#ifdef POWER_SAVE
+        Serial.println("GoTo Power Save Mode");
+        TurnDHTOff();
+        ESP.deepSleep(POWER_SAVE_TIME * 1000000); 
+        delay(100);
+#endif
+      }
     }
   } 
   return ret;  

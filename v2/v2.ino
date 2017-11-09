@@ -1,5 +1,5 @@
 /*****************************************************************************************
-* FILENAME :        esp8266_htbase4.c             DESIGN REF: 00002FW
+* FILENAME :        v2.c          
 *
 * DESCRIPTION :
 *       Base file 
@@ -477,8 +477,8 @@ void loopCallback()
  	client_sts.loop();
 
 	//// publish requests ////
-  if(millis()-timerLastPub_u32st > PUBLISH_TIME_OFFSET)
-  {
+ if(millis()-timerLastPub_u32st > PUBLISH_TIME_OFFSET)
+ {
     processPublishRequests();
     timerRepubAvoid_u32st = millis();
     timerLastPub_u32st = millis();
@@ -494,8 +494,6 @@ void loopCallback()
 		wifiManager_sts.startConfigPortal(CONFIG_SSID); // needs to be tested!
 		//ESP.reset(); // reboot and switch to setup mode right after that
 	}
-	/// see if we hold down the button for more then 6sec /// 
-
 }
 
 /**---------------------------------------------------------------------------------------
