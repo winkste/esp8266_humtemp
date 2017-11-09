@@ -38,7 +38,7 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /****************************************************************************************/
 /* Global constant defines: */
 #define FW_IDENTIFIER             "00002FW" // Firmware identification
-#define FW_VERSION                "006"     // Firmware Version
+#define FW_VERSION                "007"     // Firmware Version
 #define FW_DESCRIPTION            "Temperature & Humidity Sensor"
 
 #define MQTT_PUB_TEMPERATURE      "/temp_hum/temp" // temperature data
@@ -47,8 +47,8 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #define MQTT_REPORT_INTERVAL      5000 //(ms) - 5 seconds between reports
 
 #define POWER_SAVE                1   // 1 = activated
-#define POWER_SAVE_TIME           10 // = 10 seconds power save time
-#define MAX_PUBS_TILL_POWER_SAVE  3
+#define POWER_SAVE_TIME           60  // = 60 seconds power save time
+#define MAX_PUBS_TILL_POWER_SAVE  2   // send two times data than go to sleep
 // used pins
 //#define BUTTON_INPUT_PIN        0  // D3 used by template
 #define DHTPIN                    5  // D1
@@ -60,7 +60,6 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #define UNUSED_16                 16 // D0
 #define UNUSED_15                 15 // D8
 
-#define POWER_SAVE_TIME           60  // 60secs
 #define TEMPERATURE_CORR_FACTOR   (1.00)
 #define HUMIDITY_CORR_FACTOR      (1.23)
 #define DHTTYPE                   DHT22 // DHT11 or DHT22

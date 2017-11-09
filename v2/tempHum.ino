@@ -49,6 +49,7 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 * 000       16.10         SWI     migration from template      
 * 005       05.11         SWI     First verion working with DHT22
 * 006       06.11         SWI     Changed partnumber
+* 007       09.11         SWI     integrated power save mode
 *
 *****************************************************************************************/
 
@@ -149,7 +150,7 @@ boolean tempHum_ProcessPublishRequests(void)
       Serial.println(f2s(humidity_f32st, 2));  
       publications_u16++;
 
-      if(MAX_PUBS_TILL_POWER_SAVE < publications_u16)
+      if(MAX_PUBS_TILL_POWER_SAVE <= publications_u16)
       {
         publications_u16 = 0;
 #ifdef POWER_SAVE
