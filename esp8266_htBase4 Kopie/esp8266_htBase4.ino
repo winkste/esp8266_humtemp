@@ -1,8 +1,8 @@
 /*****************************************************************************************
-* FILENAME :        template.c             DESIGN REF: 00000FW
+* FILENAME :        esp8266_htbase4.c             DESIGN REF: 00002FW
 *
 * DESCRIPTION :
-*       File to support SONOFF basic 
+*       Base file 
 *
 * PUBLIC FUNCTIONS :
 *       boolean processPublishRequests(void)
@@ -16,10 +16,6 @@
 *       Also toggleing the button at start will startup the WIFI
 *       configuration.
 *       
-*       The basicSwitch implements the MQTT sonoff basic switch
-*       functionality to turn on/off the relay in the switch. Additional
-*       the LED will be switched to indicate the status of the 
-*       relay.
 *       
 * Copyright (c) [2017] [Stephan Wink]
 * 

@@ -1,8 +1,8 @@
 /*****************************************************************************************
-* FILENAME :        prjsettings.h          
+* FILENAME :        gensettings.h          
 *
 * DESCRIPTION :
-*       Header file to define project specific settings
+*       Header file to define general/template settings
 *
 * PUBLIC FUNCTIONS :
 *       N/A
@@ -29,44 +29,48 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 *****************************************************************************************/
-#ifndef PRJSETTINGS_H
-#define PRJSETTINGS_H
+#ifndef GENSETTINGS_H
+#define GENSETTINGS_H
 
 /****************************************************************************************/
 /* Imported header files: */
 
 /****************************************************************************************/
 /* Global constant defines: */
-#define FW_IDENTIFIER             "00001FW" // Firmware identification
-#define FW_VERSION                "005"     // Firmware Version
-#define FW_DESCRIPTION            "Temperature & Humidity Sensor"
+#define CONFIG_SSID               "OPEN_ESP_CONFIG_AP2" // SSID of the configuration mode
+#define MAX_AP_TIME               300 // restart eps after 300 sec in config mode
 
-#define MQTT_PUB_TEMPERATURE      "/temp_hum/temp" // temperature data
-#define MQTT_PUB_HUMIDITY         "/temp_hum/hum" // humidity data
-#define MQTT_PUB_BATTERY          "/temp_hum/bat" // battery capacity data
-#define MQTT_REPORT_INTERVAL      60000 //(ms) - 60 seconds between reports
-// used pins
-//#define BUTTON_INPUT_PIN        0  // D3 used by template
-#define DHTPIN                    5  // D1
-#define DHT_PWR                   4  // D2
+//#define MSG_BUFFER_SIZE           60  // mqtt messages max char size
+#define MQTT_DEFAULT_DEVICE       "devXX" // default room device 
 
-// unused pins
-#define UNUSED_12                 12 // D6
-#define UNUSED_14                 14 // D5
-#define UNUSED_16                 16 // D0
-#define UNUSED_15                 15 // D8
+#define MQTT_PUB_FW_IDENT         "/simple_light/fwident" //firmware identification
+#define MQTT_PUB_FW_VERSION       "/simple_light/fwversion" //firmware version
+#define MQTT_PUB_FW_DESC          "/simple_light/desc" //firmware description
+#define MQTT_SUB_COMMAND          "/simple_light/cmd" // command message for generic commands
+#define MQTT_CLIENT               MQTT_DEFAULT_DEVICE // just a name used to talk to MQTT broker
+#define MQTT_PAYLOAD_CMD_INFO     "INFO"
+#define MQTT_PAYLOAD_CMD_SETUP    "SETUP"
+#define PUBLISH_TIME_OFFSET       200     // ms timeout between two publishes
 
-#define POWER_SAVE_TIME           60  // 60secs
-#define TEMPERATURE_CORR_FACTOR   (1.00)
-#define HUMIDITY_CORR_FACTOR      (1.23)
-#define DHTTYPE                   DHT22 // DHT11 or DHT22
-#define SERIAL_DEBUG
+#define BUTTON_INPUT_PIN          0  // D3
+#define LED_PIN                   13 // D7
+#define BUTTON_TIMEOUT            1500  // max 1500ms timeout between each button press to count up (start of config)
+#define BUTTON_DEBOUNCE           400  // ms debouncing for the botton
 
 /****************************************************************************************/
 /* Global function like macro defines (to be avoided): */
 
 /****************************************************************************************/
 /* Global type definitions (enum, struct, union): */
+// Buffer to hold data from the WiFi manager for mqtt login
+typedef struct mqttData_tag{ //80 byte
+  char login[16];
+  char pw[16];
+  char dev_short[6];
+  char cap[2]; // capability
+  char server_ip[16];
+  char server_port[6];
+}mqttData_t;
 
 /****************************************************************************************/
 /* Global data allusions (allows type checking, definition in c file): */
@@ -74,5 +78,5 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /****************************************************************************************/
 /* Global function prototypes: */
 
-#endif /* PRJSETTINGS_H */
+#endif /* GENSETTINGS_H */
 /****************************************************************************************/

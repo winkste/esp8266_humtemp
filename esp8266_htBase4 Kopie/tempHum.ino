@@ -48,6 +48,7 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 * REF NO  VERSION DATE    WHO     DETAIL
 * 000       16.10         SWI     migration from template      
 * 005       05.11         SWI     First verion working with DHT22
+* 006       06.11         SWI     Changed partnumber
 *
 *****************************************************************************************/
 
