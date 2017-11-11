@@ -39,14 +39,15 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 /* Global constant defines: */
 #define CONFIG_SSID               "OPEN_ESP_CONFIG_AP2" // SSID of the configuration mode
 #define MAX_AP_TIME               300 // restart eps after 300 sec in config mode
+#define CONNECT_RETRIES           10
 
 //#define MSG_BUFFER_SIZE           60  // mqtt messages max char size
 #define MQTT_DEFAULT_DEVICE       "devXX" // default room device 
 
-#define MQTT_PUB_FW_IDENT         "/simple_light/fwident" //firmware identification
-#define MQTT_PUB_FW_VERSION       "/simple_light/fwversion" //firmware version
-#define MQTT_PUB_FW_DESC          "/simple_light/desc" //firmware description
-#define MQTT_SUB_COMMAND          "/simple_light/cmd" // command message for generic commands
+#define MQTT_PUB_FW_IDENT         "/generic/fwident" //firmware identification
+#define MQTT_PUB_FW_VERSION       "/generic/fwversion" //firmware version
+#define MQTT_PUB_FW_DESC          "/generic/desc" //firmware description
+#define MQTT_SUB_COMMAND          "/generic/cmd" // command message for generic commands
 #define MQTT_CLIENT               MQTT_DEFAULT_DEVICE // just a name used to talk to MQTT broker
 #define MQTT_PAYLOAD_CMD_INFO     "INFO"
 #define MQTT_PAYLOAD_CMD_SETUP    "SETUP"

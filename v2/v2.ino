@@ -118,6 +118,7 @@ boolean processPublishRequests(void)
     Serial.print("[mqtt] publish requested info: ");
     Serial.print(FW_IDENTIFIER);
     Serial.print(FW_VERSION);
+    Serial.print("\t");
     Serial.println(FW_DESCRIPTION);
     ret = client_sts.publish(build_topic(MQTT_PUB_FW_IDENT), FW_IDENTIFIER, true);
     ret &= client_sts.publish(build_topic(MQTT_PUB_FW_VERSION), FW_VERSION, true);
@@ -274,9 +275,14 @@ void reconnect()
     // Attempt to connect
     Serial.print("[mqtt] client id: ");
     Serial.println(mqttData_sts.dev_short);
-    if (client_sts.connect(mqttData_sts.dev_short, mqttData_sts.login, mqttData_sts.pw)) {
+    if (client_sts.connect(mqttData_sts.dev_short, mqttData_sts.login, mqttData_sts.pw)) 
+    {
       Serial.println("[mqtt] connected");
-
+      client_sts.loop();
+      Serial.print("[mqtt] subscribed generic: ");
+      Serial.println(MQTT_SUB_COMMAND);
+      client_sts.subscribe(build_topic(MQTT_SUB_COMMAND));  // request general command with payload
+      client_sts.loop();
       // ... and resubscribe
       tempHum_Reconnect();
 
@@ -300,9 +306,11 @@ void reconnect()
       delay(5000);
     }
     tries++;
-    if(tries>=5){
+    if(tries >= CONNECT_RETRIES){
       Serial.println("Can't connect, starting AP");
+#ifdef RESET_SETTINGS
       wifiManager_sts.resetSettings();
+#endif
       wifiManager_sts.startConfigPortal(CONFIG_SSID); // needs to be tested!
     }
   }

@@ -50,6 +50,10 @@ vAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 * 005       05.11         SWI     First verion working with DHT22
 * 006       06.11         SWI     Changed partnumber
 * 007       09.11         SWI     integrated power save mode
+* 008       11.11         SWI     change generic topics
+* 009       11.11         SWI     disable power save, set update to 60secs
+* 010       11.11         SWI     add tabs for publish fw description
+* 011       11.11         SWI     change update rate
 *
 *****************************************************************************************/
 
